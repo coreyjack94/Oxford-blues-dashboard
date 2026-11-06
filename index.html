@@ -9,35 +9,20 @@
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: #0b0f19;
-      color: #f3f4f6;
-    }
-    .glass-card {
-      background: rgba(17, 24, 39, 0.7);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .bull-crest {
-      background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%);
-      border: 2px solid rgba(59, 130, 246, 0.4);
-    }
-    .match-card { transition: transform 0.15s ease; }
+    body { font-family: 'Outfit', sans-serif; background: #0b0f19; color: #f3f4f6; }
+    .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.1); }
+    .bull-crest { background: linear-gradient(135deg,#1e3a8a 0%,#172554 100%); border: 2px solid rgba(59,130,246,.4); }
+    .match-card { transition: transform .15s ease; }
     .match-card:hover { transform: translateY(-1px); }
+    #league-frame { min-height: 72vh; }
   </style>
 </head>
 <body class="min-h-screen pb-16">
   <header class="glass-card sticky top-0 z-50 border-b border-gray-800 px-4 py-3 shadow-xl">
     <div class="max-w-md mx-auto flex items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-full bull-crest flex items-center justify-center shadow-lg">
-          <span class="text-xl" aria-hidden="true">🐂</span>
-        </div>
-        <div>
-          <h1 class="font-bold text-lg text-white leading-tight">Oxford Blues</h1>
-          <p class="text-xs text-blue-400 font-medium">Official Match Dashboard</p>
-        </div>
+        <div class="w-10 h-10 rounded-full bull-crest flex items-center justify-center shadow-lg"><span class="text-xl" aria-hidden="true">🐂</span></div>
+        <div><h1 class="font-bold text-lg text-white leading-tight">Oxford Blues</h1><p class="text-xs text-blue-400 font-medium">Official Match Dashboard</p></div>
       </div>
       <button type="button" onclick="shareToWhatsApp()" class="bg-green-600 hover:bg-green-500 text-white text-xs font-semibold px-3 py-2 rounded-xl shadow-lg transition-all active:scale-95" aria-label="Share dashboard on WhatsApp">Share WhatsApp</button>
     </div>
@@ -45,42 +30,46 @@
 
   <main class="max-w-md mx-auto px-4 pt-6 space-y-6">
     <nav class="flex rounded-xl bg-gray-900/80 p-1 border border-gray-800" aria-label="Dashboard sections">
-      <button type="button" onclick="switchTab('matches')" id="tab-matches" aria-controls="section-matches" aria-selected="true" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all bg-blue-600 text-white shadow">Match Reports</button>
+      <button type="button" onclick="switchTab('matches')" id="tab-matches" aria-controls="section-matches" aria-selected="true" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all bg-blue-600 text-white shadow">Matches</button>
       <button type="button" onclick="switchTab('stats')" id="tab-stats" aria-controls="section-stats" aria-selected="false" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all text-gray-400 hover:text-white">Player Stats</button>
+      <button type="button" onclick="switchTab('league')" id="tab-league" aria-controls="section-league" aria-selected="false" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all text-gray-400 hover:text-white">League</button>
     </nav>
 
     <section id="section-matches" class="space-y-4" aria-labelledby="tab-matches">
-      <div class="flex items-center justify-between gap-2">
-        <h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase">Season Match Logs</h2>
-        <span id="match-count" class="text-xs bg-blue-900/40 text-blue-300 px-2 py-0.5 rounded-full border border-blue-800/50">Loading…</span>
-      </div>
+      <div class="flex items-center justify-between gap-2"><h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase">Season Match Logs</h2><span id="match-count" class="text-xs bg-blue-900/40 text-blue-300 px-2 py-0.5 rounded-full border border-blue-800/50">Loading…</span></div>
       <p id="dashboard-status" class="text-xs text-gray-500" aria-live="polite">Loading match results…</p>
-      <div id="match-list" class="space-y-4" aria-live="polite">
-        <div class="glass-card rounded-2xl p-4 text-sm text-gray-400">Loading matches…</div>
-      </div>
+      <div id="match-list" class="space-y-4" aria-live="polite"><div class="glass-card rounded-2xl p-4 text-sm text-gray-400">Loading matches…</div></div>
     </section>
 
     <section id="section-stats" class="space-y-4 hidden" aria-labelledby="tab-stats">
-      <div class="flex items-center justify-between">
-        <h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase">Singles Win Tallies</h2>
-        <span class="text-xs text-blue-400 font-medium">Total singles wins</span>
+      <div class="flex items-center justify-between"><h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase">Singles Win Tallies</h2><span class="text-xs text-blue-400 font-medium">Total singles wins</span></div>
+      <div id="player-stats" class="glass-card rounded-2xl p-4 shadow-xl space-y-1" aria-live="polite"><p class="text-sm text-gray-400">Loading player stats…</p></div>
+    </section>
+
+    <section id="section-league" class="space-y-4 hidden" aria-labelledby="tab-league">
+      <div>
+        <h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase">LeagueRepublic</h2>
+        <p class="text-xs text-gray-400 mt-1">Live league fixtures, results and standings from the league website.</p>
       </div>
-      <div id="player-stats" class="glass-card rounded-2xl p-4 shadow-xl space-y-1" aria-live="polite">
-        <p class="text-sm text-gray-400">Loading player stats…</p>
+      <div class="flex gap-2">
+        <a href="https://hadbappl.leaguerepublic.com/index.html" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-3 py-2 rounded-xl">Open LeagueRepublic</a>
+        <button type="button" onclick="document.getElementById('league-frame').src='https://hadbappl.leaguerepublic.com/index.html'" class="text-sm font-semibold px-3 py-2 rounded-xl border border-gray-700 hover:bg-gray-800">Reload</button>
       </div>
+      <div class="glass-card rounded-xl overflow-hidden">
+        <iframe id="league-frame" title="LeagueRepublic fixtures, results and standings" src="https://hadbappl.leaguerepublic.com/index.html" class="w-full bg-white" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <p class="text-xs text-gray-500">If the league site does not appear here, its security settings prevent embedding. Use “Open LeagueRepublic” above to view it in a separate tab. The League tab does not change your existing match dashboard or Google Sheet.</p>
     </section>
   </main>
 
-  <footer class="max-w-md mx-auto px-4 mt-8 text-center text-xs text-gray-500">
-    Oxford Blues Pool Team • Match dashboard
-  </footer>
+  <footer class="max-w-md mx-auto px-4 mt-8 text-center text-xs text-gray-500">Oxford Blues Pool Team • Match dashboard</footer>
 
   <script>
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTAfSP2o2DjZ30zAwJLm3yQGIXzvtuz5k8Y5lkcpcfeuIcHWgAaGGv3169AAIT_typ-gAXvlNE7ka4A/pub?gid=0&single=true&output=csv';
     const REFRESH_INTERVAL_MS = 60 * 1000;
 
     function switchTab(tabId) {
-      ['matches', 'stats'].forEach(tab => {
+      ['matches', 'stats', 'league'].forEach(tab => {
         const selected = tab === tabId;
         document.getElementById('section-' + tab).classList.toggle('hidden', !selected);
         const button = document.getElementById('tab-' + tab);
@@ -97,23 +86,15 @@
     }
 
     function escapeHtml(value) {
-      return String(value ?? '').replace(/[&<>"']/g, character => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      })[character]);
+      return String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
     }
 
-    function normalizeHeading(value) {
-      return String(value ?? '').replace(/^\uFEFF/, '').trim().toLowerCase();
-    }
-
+    function normalizeHeading(value) { return String(value ?? '').replace(/^\uFEFF/, '').trim().toLowerCase(); }
     function getValue(row, heading) {
       const key = Object.keys(row).find(item => normalizeHeading(item) === normalizeHeading(heading));
       return key ? String(row[key] ?? '').trim() : '';
     }
-
-    function splitWinners(value) {
-      return String(value || '').split(/[,;]/).map(name => name.trim()).filter(Boolean);
-    }
+    function splitWinners(value) { return String(value || '').split(/[,;]/).map(name => name.trim()).filter(Boolean); }
 
     function showError(message) {
       document.getElementById('dashboard-status').textContent = message;
@@ -127,13 +108,11 @@
       const matchList = document.getElementById('match-list');
       const playerStats = document.getElementById('player-stats');
       document.getElementById('match-count').textContent = `${matches.length} Match${matches.length === 1 ? '' : 'es'} Played`;
-
       if (!matches.length) {
         matchList.innerHTML = '<div class="glass-card rounded-2xl p-4 text-sm text-gray-400">No match results yet. Add a match row to the spreadsheet to get started.</div>';
         playerStats.innerHTML = '<p class="text-sm text-gray-400">No singles winners listed yet.</p>';
         return;
       }
-
       const tallies = {};
       matchList.innerHTML = matches.map((row, index) => {
         const week = getValue(row, 'Game Week');
@@ -143,9 +122,7 @@
         const venue = getValue(row, 'Venue');
         const report = getValue(row, 'Report');
         const winners = splitWinners(getValue(row, 'Singles Winners'));
-
         winners.forEach(name => { tallies[name] = (tallies[name] || 0) + 1; });
-
         const haveScores = bluesScore !== '' && opponentScore !== '';
         const blues = Number(bluesScore), opposition = Number(opponentScore);
         const validScores = haveScores && Number.isFinite(blues) && Number.isFinite(opposition);
@@ -157,7 +134,6 @@
         const borderColor = draw ? 'border-l-yellow-500' : win ? 'border-l-emerald-500' : loss ? 'border-l-red-500' : 'border-l-blue-500';
         const score = haveScores ? `${escapeHtml(bluesScore)}-${escapeHtml(opponentScore)}` : 'Score pending';
         const details = [week ? `Game Week ${escapeHtml(week)}` : '', venue ? escapeHtml(venue) : ''].filter(Boolean).join(' · ');
-
         return `<article class="match-card glass-card rounded-2xl p-4 shadow-xl border-l-4 ${borderColor}">
           <div class="flex justify-between items-start gap-3 mb-2"><div>
             <span class="text-[10px] uppercase tracking-wider font-bold text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded">${index === 0 ? 'Latest Match' : escapeHtml(result)}</span>
@@ -170,27 +146,18 @@
           </div>` : ''}
         </article>`;
       }).join('');
-
       const players = Object.entries(tallies).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
       playerStats.innerHTML = players.length
-        ? players.map(([name, wins], index) => `<div class="flex items-center justify-between py-2 ${index < players.length - 1 ? 'border-b border-gray-800' : ''}">
-            <span class="font-semibold text-sm text-white flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500"></span>${escapeHtml(name)}</span>
-            <span class="bg-blue-600/20 text-blue-400 font-bold px-3 py-1 rounded-lg text-xs border border-blue-500/30">${wins} ${wins === 1 ? 'Win' : 'Wins'}</span>
-          </div>`).join('')
+        ? players.map(([name, wins], index) => `<div class="flex items-center justify-between py-2 ${index < players.length - 1 ? 'border-b border-gray-800' : ''}"><span class="font-semibold text-sm text-white flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-500"></span>${escapeHtml(name)}</span><span class="bg-blue-600/20 text-blue-400 font-bold px-3 py-1 rounded-lg text-xs border border-blue-500/30">${wins} ${wins === 1 ? 'Win' : 'Wins'}</span></div>`).join('')
         : '<p class="text-sm text-gray-400">No singles winners listed yet.</p>';
     }
 
     function loadDashboard() {
-      if (typeof Papa === 'undefined') {
-        showError('The CSV reader did not load. Check your internet connection and reload the page.');
-        return;
-      }
+      if (typeof Papa === 'undefined') { showError('The CSV reader did not load. Check your internet connection and reload the page.'); return; }
       const url = new URL(CSV_URL);
       url.searchParams.set('_refresh', Date.now());
       Papa.parse(url.toString(), {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
+        download: true, header: true, skipEmptyLines: true,
         complete: result => {
           renderDashboard(result.data || []);
           document.getElementById('dashboard-status').textContent = `Updated ${new Date().toLocaleTimeString()} · Refreshes automatically every minute`;
