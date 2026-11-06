@@ -14,7 +14,7 @@
     .bull-crest { background: linear-gradient(135deg,#1e3a8a 0%,#172554 100%); border: 2px solid rgba(59,130,246,.4); }
     .match-card { transition: transform .15s ease; }
     .match-card:hover { transform: translateY(-1px); }
-    #league-frame { min-height: 72vh; }
+    .league-scroll { scrollbar-width: thin; scrollbar-color: #475569 #111827; }
   </style>
 </head>
 <body class="min-h-screen pb-16">
@@ -48,17 +48,44 @@
 
     <section id="section-league" class="space-y-4 hidden" aria-labelledby="tab-league">
       <div>
-        <h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase">LeagueRepublic</h2>
-        <p class="text-xs text-gray-400 mt-1">Live league fixtures, results and standings from the league website.</p>
+        <h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase">League table · Division 1</h2>
+        <p class="text-xs text-gray-400 mt-1">Current standings from the LeagueRepublic screenshot you provided.</p>
       </div>
-      <div class="flex gap-2">
-        <a href="https://hadbappl.leaguerepublic.com/index.html" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-3 py-2 rounded-xl">Open LeagueRepublic</a>
-        <button type="button" onclick="document.getElementById('league-frame').src='https://hadbappl.leaguerepublic.com/index.html'" class="text-sm font-semibold px-3 py-2 rounded-xl border border-gray-700 hover:bg-gray-800">Reload</button>
+      <a href="https://hadbappl.leaguerepublic.com/index.html" target="_blank" rel="noopener noreferrer" class="block text-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-3 rounded-xl shadow transition-colors">Open LeagueRepublic</a>
+      <div class="glass-card rounded-2xl overflow-hidden">
+        <div class="league-scroll overflow-x-auto">
+          <table class="w-full min-w-[680px] text-sm text-left">
+            <caption class="sr-only">Division 1 standings as shown in the LeagueRepublic screenshot</caption>
+            <thead class="bg-gray-900/80 text-gray-400 uppercase text-xs tracking-wide">
+              <tr>
+                <th scope="col" class="px-3 py-3 text-center">#</th>
+                <th scope="col" class="px-3 py-3">Team</th>
+                <th scope="col" class="px-3 py-3 text-center">P</th>
+                <th scope="col" class="px-3 py-3 text-center">W</th>
+                <th scope="col" class="px-3 py-3 text-center">D</th>
+                <th scope="col" class="px-3 py-3 text-center">L</th>
+                <th scope="col" class="px-3 py-3 text-center">F</th>
+                <th scope="col" class="px-3 py-3 text-center">A</th>
+                <th scope="col" class="px-3 py-3 text-center">+/-</th>
+                <th scope="col" class="px-3 py-3 text-center">Pts</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800">
+              <tr class="bg-blue-950/60 text-white font-bold"><td class="px-3 py-3 text-center">1</td><th scope="row" class="px-3 py-3 whitespace-nowrap">Oxford Blues</th><td class="px-3 py-3 text-center">5</td><td class="px-3 py-3 text-center">3</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">29</td><td class="px-3 py-3 text-center">21</td><td class="px-3 py-3 text-center">8</td><td class="px-3 py-3 text-center text-blue-300">7</td></tr>
+              <tr class="hover:bg-gray-800/60"><td class="px-3 py-3 text-center text-gray-400">2</td><th scope="row" class="px-3 py-3 whitespace-nowrap font-medium">Ding Dong</th><td class="px-3 py-3 text-center">3</td><td class="px-3 py-3 text-center">3</td><td class="px-3 py-3 text-center">0</td><td class="px-3 py-3 text-center">0</td><td class="px-3 py-3 text-center">20</td><td class="px-3 py-3 text-center">10</td><td class="px-3 py-3 text-center">10</td><td class="px-3 py-3 text-center font-semibold">6</td></tr>
+              <tr class="hover:bg-gray-800/60"><td class="px-3 py-3 text-center text-gray-400">3</td><th scope="row" class="px-3 py-3 whitespace-nowrap font-medium">The Barrels</th><td class="px-3 py-3 text-center">4</td><td class="px-3 py-3 text-center">3</td><td class="px-3 py-3 text-center">0</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">23</td><td class="px-3 py-3 text-center">17</td><td class="px-3 py-3 text-center">6</td><td class="px-3 py-3 text-center font-semibold">6</td></tr>
+              <tr class="hover:bg-gray-800/60"><td class="px-3 py-3 text-center text-gray-400">4</td><th scope="row" class="px-3 py-3 whitespace-nowrap font-medium">Foxy Boys</th><td class="px-3 py-3 text-center">4</td><td class="px-3 py-3 text-center">2</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">22</td><td class="px-3 py-3 text-center">18</td><td class="px-3 py-3 text-center">4</td><td class="px-3 py-3 text-center font-semibold">5</td></tr>
+              <tr class="hover:bg-gray-800/60"><td class="px-3 py-3 text-center text-gray-400">5</td><th scope="row" class="px-3 py-3 whitespace-nowrap font-medium">Spam Javelins</th><td class="px-3 py-3 text-center">3</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">17</td><td class="px-3 py-3 text-center">13</td><td class="px-3 py-3 text-center">4</td><td class="px-3 py-3 text-center font-semibold">3</td></tr>
+              <tr class="hover:bg-gray-800/60"><td class="px-3 py-3 text-center text-gray-400">6</td><th scope="row" class="px-3 py-3 whitespace-nowrap font-medium">Golden Shower</th><td class="px-3 py-3 text-center">4</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">2</td><td class="px-3 py-3 text-center">21</td><td class="px-3 py-3 text-center">19</td><td class="px-3 py-3 text-center">2</td><td class="px-3 py-3 text-center font-semibold">3</td></tr>
+              <tr class="hover:bg-gray-800/60"><td class="px-3 py-3 text-center text-gray-400">7</td><th scope="row" class="px-3 py-3 whitespace-nowrap font-medium">Behind the balls</th><td class="px-3 py-3 text-center">4</td><td class="px-3 py-3 text-center">0</td><td class="px-3 py-3 text-center">2</td><td class="px-3 py-3 text-center">2</td><td class="px-3 py-3 text-center">14</td><td class="px-3 py-3 text-center">26</td><td class="px-3 py-3 text-center">-12</td><td class="px-3 py-3 text-center font-semibold">2</td></tr>
+              <tr class="hover:bg-gray-800/60"><td class="px-3 py-3 text-center text-gray-400">8</td><th scope="row" class="px-3 py-3 whitespace-nowrap font-medium">Wobbly balls</th><td class="px-3 py-3 text-center">3</td><td class="px-3 py-3 text-center">0</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">2</td><td class="px-3 py-3 text-center">11</td><td class="px-3 py-3 text-center">19</td><td class="px-3 py-3 text-center">-8</td><td class="px-3 py-3 text-center font-semibold">1</td></tr>
+              <tr class="hover:bg-gray-800/60"><td class="px-3 py-3 text-center text-gray-400">9</td><th scope="row" class="px-3 py-3 whitespace-nowrap font-medium">Wot's the Rules</th><td class="px-3 py-3 text-center">4</td><td class="px-3 py-3 text-center">0</td><td class="px-3 py-3 text-center">1</td><td class="px-3 py-3 text-center">3</td><td class="px-3 py-3 text-center">13</td><td class="px-3 py-3 text-center">27</td><td class="px-3 py-3 text-center">-14</td><td class="px-3 py-3 text-center font-semibold">1</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="glass-card rounded-xl overflow-hidden">
-        <iframe id="league-frame" title="LeagueRepublic fixtures, results and standings" src="https://hadbappl.leaguerepublic.com/index.html" class="w-full bg-white" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      </div>
-      <p class="text-xs text-gray-500">If the league site does not appear here, its security settings prevent embedding. Use “Open LeagueRepublic” above to view it in a separate tab. The League tab does not change your existing match dashboard or Google Sheet.</p>
+      <p class="text-xs text-gray-500">LeagueRepublic last-updated time shown in your screenshot: 09/10/26 12:47. This is a snapshot, not an automatic live feed; send an updated table screenshot when standings change.</p>
+      <p class="text-xs text-gray-500">Swipe the table sideways to see every column on a small screen.</p>
     </section>
   </main>
 
