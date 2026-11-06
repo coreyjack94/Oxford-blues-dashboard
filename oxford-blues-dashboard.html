@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Oxford Blues Pool Team Dashboard&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Outfit', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #0b0f19;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #f3f4f6;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.glass-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(17, 24, 39, 0.7);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>backdrop-filter: blur(12px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid rgba(255, 255, 255, 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.bull-crest {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 2px solid rgba(59, 130, 246, 0.4);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.match-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.15s ease, opacity 0.15s ease;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.match-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-1px);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="min-h-screen pb-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Header --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="glass-card sticky top-0 z-50 border-b border-gray-800 px-4 py-3 shadow-xl"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="max-w-md mx-auto flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-center space-x-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-10 h-10 rounded-full bull-crest flex items-center justify-center shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-xl"&gt;🐂&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h1 class="font-bold text-lg text-white leading-tight"&gt;Oxford Blues&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-xs text-blue-400 font-medium"&gt;Official Match Dashboard&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="shareToWhatsApp()" class="bg-green-600 hover:bg-green-500 text-white text-xs font-semibold px-3 py-2 rounded-xl flex items-center space-x-1.5 shadow-lg transition-all active:scale-95"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span&gt;Share WhatsApp&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="max-w-md mx-auto px-4 pt-6 space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Tab Navigation --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex rounded-xl bg-gray-900/80 p-1 border border-gray-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="switchTab('matches')" id="tab-matches" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all bg-blue-600 text-white shadow"&gt;Match Reports&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button onclick="switchTab('stats')" id="tab-stats" class="flex-1 py-2 text-xs font-bold rounded-lg transition-all text-gray-400 hover:text-white"&gt;Player Stats&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SECTION: MATCH REPORTS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="section-matches" class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase"&gt;Season Match Logs&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="match-count" class="text-xs bg-blue-900/40 text-blue-300 px-2 py-0.5 rounded-full border border-blue-800/50"&gt;Loading…&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="match-list" class="space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Loading matches…</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SECTION: PLAYER STATS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="section-stats" class="space-y-4 hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-center justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-sm font-bold tracking-wider text-gray-400 uppercase"&gt;Singles Win Tallies&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-xs text-blue-400 font-medium"&gt;Total Singles Count&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="player-stats" class="glass-card rounded-2xl p-4 shadow-xl space-y-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Loading player stats…</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Footer --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="max-w-md mx-auto px-4 mt-8 text-center text-xs text-gray-500"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>Oxford Blues Pool Team • Master Match Dashboard</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTAfSP2o2DjZ30zAwJLm3yQGIXzvtuz5k8Y5lkcpcfeuIcHWgAaGGv3169AAIT_typ-gAXvlNE7ka4A/pub?gid=0&amp;single=true&amp;output=csv";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function switchTab(tabId) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>['matches', 'stats'].forEach(tab =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const section = document.getElementById('section-' + tab);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const button = document.getElementById('tab-' + tab);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (section) section.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (button) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>button.className = 'flex-1 py-2 text-xs font-bold rounded-lg transition-all text-gray-400 hover:text-white';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const chosenSection = document.getElementById('section-' + tabId);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const chosenButton = document.getElementById('tab-' + tabId);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (chosenSection) chosenSection.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (chosenButton) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>chosenButton.className = 'flex-1 py-2 text-xs font-bold rounded-lg transition-all bg-blue-600 text-white shadow';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function shareToWhatsApp() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const text = "🎱 Oxford Blues Pool Update: Check out our latest match reports and player win tallies on our live team dashboard.";</p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(text), "_blank");</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getValue(row, heading) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const key = Object.keys(row).find(</p>
+<p class="p1"><span class="Apple-converted-space">                </span>item =&gt; item.trim().toLowerCase() === heading.trim().toLowerCase()</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return key ? String(row[key] ?? '').trim() : '';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function escapeHtml(value) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return String(value ?? '').replace(/[&amp;&lt;&gt;"']/g, char =&gt; ({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>'&amp;': '&amp;amp;',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>'&lt;': '&amp;lt;',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>'&gt;': '&amp;gt;',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>'"': '&amp;quot;',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"'": '&amp;#39;'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>})[char]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function formatWinners(value) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return String(value || '')</p>
+<p class="p1"><span class="Apple-converted-space">                </span>.split(/[,;]/)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>.map(name =&gt; name.trim())</p>
+<p class="p1"><span class="Apple-converted-space">                </span>.filter(Boolean);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function loadDashboard() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Papa.parse(CSV_URL, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>download: true,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>header: true,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>skipEmptyLines: true,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>complete: function(result) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const matches = result.data.filter(row =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>return getValue(row, 'Opponent') || getValue(row, 'Blues Score');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const matchCountEl = document.getElementById('match-count');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (matchCountEl) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>matchCountEl.textContent = `${matches.length} Match${matches.length === 1 ? '' : 'es'} Played`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const matchListEl = document.getElementById('match-list');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const playerStatsEl = document.getElementById('player-stats');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (!matches.length) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>if (matchListEl) {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>matchListEl.textContent = 'No match results found. Check that your published sheet has rows.';</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>if (playerStatsEl) {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>playerStatsEl.textContent = 'No player stats yet.';</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const tallies = {};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (matchListEl) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>matchListEl.innerHTML = matches.map((row, index) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const week = getValue(row, 'Game Week');</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const opponent = getValue(row, 'Opponent') || 'Opponent';</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const bluesScore = getValue(row, 'Blues Score');</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const opponentScore = getValue(row, 'Opponent Score');</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const venue = getValue(row, 'Venue');</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const report = getValue(row, 'Report');</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const winners = formatWinners(getValue(row, 'Singles Winners'));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>winners.forEach(name =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>tallies[name] = (tallies[name] || 0) + 1;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const blues = Number(bluesScore);</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const opp = Number(opponentScore);</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const isDraw = Number.isFinite(blues) &amp;&amp; Number.isFinite(opp) &amp;&amp; blues === opp;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const isWin = Number.isFinite(blues) &amp;&amp; Number.isFinite(opp) &amp;&amp; blues &gt; opp;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const scoreColor = isDraw ? 'text-yellow-400' : isWin ? 'text-emerald-400' : 'text-red-400';</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const resultLabel = isDraw ? 'Draw' : isWin ? 'Win' : 'Loss';</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>const borderColor = isDraw ? 'border-l-yellow-500' : isWin ? 'border-l-emerald-500' : 'border-l-red-500';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                            </span>return `</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;article class="match-card glass-card rounded-2xl p-4 shadow-xl border-l-4 ${borderColor}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="flex justify-between items-start mb-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;span class="text-[10px] uppercase tracking-wider font-bold text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>${index === 0 ? 'Latest Match' : escapeHtml(resultLabel)}</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;h3 class="text-lg font-bold text-white mt-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>Oxford Blues &lt;span class="${scoreColor}"&gt;${escapeHtml(bluesScore)}-${escapeHtml(opponentScore)}&lt;/span&gt; ${escapeHtml(opponent)}</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;p class="text-xs text-gray-400 mt-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>${week ? `Game Week ${escapeHtml(week)}` : ''}</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>${venue ? ` · ${escapeHtml(venue)}` : ''}</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;span class="text-xl"&gt;🎱&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="space-y-3 mt-3 text-xs text-gray-300 border-t border-gray-800/80 pt-3"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>${report ? `</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;span class="font-semibold text-blue-300 block mb-1"&gt;Captain's Log:&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;p class="leading-relaxed text-gray-300 whitespace-pre-line"&gt;${escapeHtml(report)}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>` : ''}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>${winners.length ? `</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;div class="bg-gray-900/50 p-2.5 rounded-xl border border-gray-800"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;span class="font-semibold text-emerald-400 block mb-1"&gt;Singles Match Winners:&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;div class="flex flex-wrap gap-1.5"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>${winners.map(name =&gt; `</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;span class="bg-emerald-950 text-emerald-300 border border-emerald-800/60 px-2 py-0.5 rounded-md font-medium"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                            </span>${escapeHtml(name)}</p>
+<p class="p1"><span class="Apple-converted-space">                                                        </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                                    </span>`).join('')}</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>` : ''}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/article&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}).join('');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const entries = Object.entries(tallies).sort((a, b) =&gt; b[1] - a[1]);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (playerStatsEl) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>playerStatsEl.innerHTML = entries.length</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>? entries.map(([name, wins], index) =&gt; `</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="flex items-center justify-between py-2 ${index &lt; entries.length - 1 ? 'border-b border-gray-800' : ''}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="font-semibold text-sm text-white flex items-center gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;span class="w-2 h-2 rounded-full bg-blue-500"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>${escapeHtml(name)}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="bg-blue-600/20 text-blue-400 font-bold px-3 py-1 rounded-lg text-xs border border-blue-500/30"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>${wins} ${wins === 1 ? 'Win' : 'Wins'}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>`).join('')</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>: 'No singles winners listed yet.';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>error: function() {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const matchListEl = document.getElementById('match-list');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const playerStatsEl = document.getElementById('player-stats');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (matchListEl) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>matchListEl.textContent = 'Could not load the spreadsheet. Check that the tab is published as CSV.';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (playerStatsEl) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>playerStatsEl.textContent = 'Could not load player stats.';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>loadDashboard();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
